@@ -142,7 +142,57 @@ namespace Custom.Manual.ORM.Base.Data
 
         public List<T> GetCustom(string sql)
         {
-            throw new NotImplementedException();
+            List<T> resultsList = new List<T>();
+
+            _dbConnection.SetCommand(sql);
+            var reader = _dbConnection.Result();
+
+            if (reader != null)
+            {
+                DataTable table = new DataTable();
+                table.Load(reader);
+                List<string> dbColumns = table.Columns.Cast<DataColumn>().Select(p => p.ColumnName).ToList();
+
+                foreach (DataRow itemline in table.Rows)
+                {
+                    var valueObject = (T)Activator.CreateInstance(typeof(T));
+
+                    foreach (var property in typeof(T).GetProperties())
+                    {
+                        var columnName = MapPropertyNameToColumnName(property.Name);
+                        if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
+                            continue;
+
+
+                        var value = itemline[columnName];
+                        if (property.PropertyType == typeof(bool))
+                        {
+                            if (value == DBNull.Value) value = "N";
+                            if ((string)value == "T") value = "Y";
+
+                            bool columnValue = (string)value == "Y" ? true : false;
+                            property.SetValue(valueObject, columnValue, null);
+                        }
+                        else
+                        {
+                            var columnValue = itemline[columnName];
+                            if (columnValue == DBNull.Value) columnValue = null;
+                            property.SetValue(valueObject, columnValue, null);
+                        }
+                    }
+
+                    resultsList.Add(valueObject);
+                }
+            }
+            else
+            {
+                _dbConnection.Connection().Close();
+                throw new Exception("BaseDataManager.GetCustom: Error accessing database (SqlDataReader returned as NULL)");
+            }
+
+            _dbConnection.Connection().Close();
+
+            return resultsList;
         }
 
         public void Update(T entity)

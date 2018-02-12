@@ -135,9 +135,17 @@ namespace Custom.Manual.ORM.Base.Data
             return resultsList;
         }
 
-        public int GetCount(T entity)
+        public int GetCount()
         {
-            throw new NotImplementedException();
+            int result = new int();
+
+            string sql = String.Format("SELECT COUNT(*) FROM {0} ", TableName);
+
+            result = _dbConnection.SetCountCommand(sql);
+
+            _dbConnection.Connection().Close();
+
+            return result;
         }
 
         public List<T> GetCustom(string sql)

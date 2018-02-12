@@ -9,7 +9,7 @@ namespace Custom.Manual.ORM.Base.Interfaces
         void Update(T entity);
         void Delete(T entity);
         int GetCount();
-        List<T> GetAll(T entity);
+        List<T> GetAll();
         List<T> GetCustom(string sql);
     }
 }

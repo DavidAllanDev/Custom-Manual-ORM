@@ -78,7 +78,7 @@ namespace Custom.Manual.ORM.Base.Data
             throw new NotImplementedException();
         }
 
-        public List<T> GetAll(T entity)
+        public List<T> GetAll()
         {
             List<T> resultsList = new List<T>();
 

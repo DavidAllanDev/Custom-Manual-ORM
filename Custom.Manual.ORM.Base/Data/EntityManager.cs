@@ -94,7 +94,42 @@ namespace Custom.Manual.ORM.Base.Data
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            string colSetPlaceHolder = string.Empty;
+            bool firstColumn = true;
+
+            IList<PropertyInfo> persistanceProperties = GetPersistenceProperties(entity);
+            foreach (PropertyInfo property in persistanceProperties)
+            {
+                if (!firstColumn)
+                {
+                    colSetPlaceHolder += ", ";
+                }
+
+                firstColumn = false;
+
+                string columnName = MapPropertyNameToColumnName(property.Name);
+                object columnValue = null;
+
+                if (property.PropertyType.IsEnum)
+                {
+                    columnValue = Convert.ToInt32(property.GetValue(entity, null));
+                }
+                else
+                {
+                    columnValue = property.GetValue(entity, null) ?? DBNull.Value;
+                }
+
+                colSetPlaceHolder += string.Format("[{0}] = {1}", columnName, columnValue);
+            }
+
+            string databaseColumnName = MapPropertyNameToColumnName(KeyFields.Id);
+            string sql = String.Format("UPDATE {0} SET {1} WHERE {2} = {3}", TableName, colSetPlaceHolder, databaseColumnName, entity.Id);
+
+            var updateSuccessful = _dbConnection.SetUpdateCommand(sql);
+            if (!updateSuccessful)
+            {
+                throw new Exception("BaseDataManager.Update: Error during the entity update");
+            }
         }
 
         private string MapPropertyNameToColumnName(string propertyName)

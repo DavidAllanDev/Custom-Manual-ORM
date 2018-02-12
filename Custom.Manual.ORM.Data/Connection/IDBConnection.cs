@@ -9,6 +9,7 @@ namespace Custom.Manual.ORM.Data.Connection
         SqlConnection Connection();
         void SetCommand(string sql);
         object SetInsertCommand(string sql);
+        int SetCountCommand(string sql);
         bool SetUpdateCommand(string sql);
         SqlDataReader Result();
     }

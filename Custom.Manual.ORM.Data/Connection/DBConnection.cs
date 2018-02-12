@@ -40,6 +40,11 @@ namespace Custom.Manual.ORM.Data.Connection
             return _sqlCommand.ExecuteScalar();
         }
 
+        public int SetCountCommand(string sql)
+        {
+            return (int)SetInsertCommand(sql);
+        }
+
         public bool SetUpdateCommand(string sql)
         {
             _sqlCommand = new SqlCommand(sql, _sqlConnection);

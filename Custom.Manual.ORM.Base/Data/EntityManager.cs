@@ -295,15 +295,15 @@ namespace Custom.Manual.ORM.Base.Data
 
             if (id.GetType() == typeof(string))
             {
-                where = String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName("Id"), id);
+                where = String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
             }
             else if (id.GetType() == typeof(int))
             {
-                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName("Id"), id);
+                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
             }
             else
             {
-                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName("Id"), id);
+                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
             }
 
             return String.Format("SELECT * FROM {0} {1}", TableName, where);

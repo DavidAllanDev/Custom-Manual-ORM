@@ -70,12 +70,16 @@ namespace Custom.Manual.ORM.Base.Data
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            Delete(entity.Id);
         }
 
         public void Delete(TId id)
         {
-            throw new NotImplementedException();
+            var deleteSuccessful = _dbConnection.SetUpdateCommand(GetSQLDeleteById(id));
+            if (!deleteSuccessful)
+            {
+                throw new Exception("BaseDataManager.Update: Error during a entity delete");
+            }
         }
 
         public T Get(TId id)
@@ -291,6 +295,20 @@ namespace Custom.Manual.ORM.Base.Data
 
         private string GetSQLGetById(TId id)
         {
+            string where = GetSQLWhereId(id);
+
+            return String.Format("SELECT * FROM {0} {1}", TableName, where);
+        }
+
+        private string GetSQLDeleteById(TId id)
+        {
+            string where = GetSQLWhereId(id);
+
+            return String.Format("DELETE FROM {0} {1}", TableName, where);
+        }
+
+        private string GetSQLWhereId(TId id)
+        {
             string where = String.Empty;
 
             if (id.GetType() == typeof(string))
@@ -306,7 +324,7 @@ namespace Custom.Manual.ORM.Base.Data
                 where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
             }
 
-            return String.Format("SELECT * FROM {0} {1}", TableName, where);
+            return where;
         }
 
         private string MapPropertyNameToColumnName(string propertyName)

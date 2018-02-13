@@ -40,10 +40,7 @@ namespace Custom.Manual.ORM.Data.Connection
             return _sqlCommand.ExecuteScalar();
         }
 
-        public int SetCountCommand(string sql)
-        {
-            return (int)SetInsertCommand(sql);
-        }
+        public int SetCountCommand(string sql) => (int)SetInsertCommand(sql);
 
         public bool SetUpdateCommand(string sql)
         {

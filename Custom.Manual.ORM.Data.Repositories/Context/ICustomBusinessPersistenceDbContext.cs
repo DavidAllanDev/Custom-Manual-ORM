@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Custom.Manual.ORM.Data.Repositories.Context
 {
-    interface ICustomBusinessPersistenceDbContext
+    public interface ICustomBusinessPersistenceDbContext
     {
     }
 }

@@ -52,10 +52,9 @@ namespace Custom.Manual.ORM.Base.Data
                 }
             }
 
-            string sql = String.Format("INSERT INTO {0} ({1}) VALUES ({2}) SELECT SCOPE_IDENTITY()", TableName, colNamePlaceHolder, colValuePlaceHolder);
-
             try
             {
+                string sql = GetSQLAddEntity(colNamePlaceHolder, colValuePlaceHolder);
                 var id = (TId)Convert.ChangeType(_dbConnection.SetInsertCommand(sql), typeof(TId));
 
                 entity.Id = id;
@@ -132,9 +131,7 @@ namespace Custom.Manual.ORM.Base.Data
         {
             List<T> resultsList = new List<T>();
 
-            string sql = String.Format("SELECT * FROM {0} ", TableName);
-
-            _dbConnection.SetCommand(sql);
+            _dbConnection.SetCommand(GetSQLGetAll());
             var reader = _dbConnection.Result();
 
             if (reader != null)
@@ -185,17 +182,27 @@ namespace Custom.Manual.ORM.Base.Data
             return resultsList;
         }
 
+        private string GetSQLGetAll()
+        {
+            return String.Format("SELECT * FROM {0} ", TableName);
+        }
+
         public int GetCount()
         {
             int result = new int();
 
-            string sql = String.Format("SELECT COUNT(*) FROM {0} ", TableName);
+            string sql = GetSQLGetCount();
 
             result = _dbConnection.SetCountCommand(sql);
 
             _dbConnection.Connection().Close();
 
             return result;
+        }
+
+        private string GetSQLGetCount()
+        {
+            return String.Format("SELECT COUNT(*) FROM {0} ", TableName);
         }
 
         public List<T> GetCustom(string sql)
@@ -283,14 +290,19 @@ namespace Custom.Manual.ORM.Base.Data
                 colSetPlaceHolder += string.Format("[{0}] = {1}", columnName, columnValue);
             }
 
-            string databaseColumnName = MapPropertyNameToColumnName(KeyFields.Id);
-            string sql = String.Format("UPDATE {0} SET {1} WHERE {2} = {3}", TableName, colSetPlaceHolder, databaseColumnName, entity.Id);
+            string sql = GetSQLUpdateEntity(entity, colSetPlaceHolder);
 
             var updateSuccessful = _dbConnection.SetUpdateCommand(sql);
             if (!updateSuccessful)
             {
                 throw new Exception("BaseDataManager.Update: Error during the entity update");
             }
+        }
+
+        private string GetSQLUpdateEntity(T entity, string colSetPlaceHolder)
+        {
+            return String.Format("UPDATE {0} SET {1} WHERE {2} = {3}", TableName, colSetPlaceHolder, MapPropertyNameToColumnName(KeyFields.Id), entity.Id);
+
         }
 
         private string GetSQLGetById(TId id)
@@ -325,6 +337,11 @@ namespace Custom.Manual.ORM.Base.Data
             }
 
             return where;
+        }
+
+        private string GetSQLAddEntity(string colNamePlaceHolder, string colValuePlaceHolder)
+        {
+            return string.Format("INSERT INTO {0} ({1}) VALUES ({2}) SELECT SCOPE_IDENTITY()", TableName, colNamePlaceHolder, colValuePlaceHolder);
         }
 
         private string MapPropertyNameToColumnName(string propertyName)

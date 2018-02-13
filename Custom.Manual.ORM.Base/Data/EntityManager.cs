@@ -75,7 +75,48 @@ namespace Custom.Manual.ORM.Base.Data
 
         public T Get(TId id)
         {
-            throw new NotImplementedException();
+            _dbConnection.SetCommand(GetSQLGetById(id));
+            var reader = _dbConnection.Result();
+
+            if (reader != null)
+            {
+                DataTable table = new DataTable();
+                table.Load(reader);
+                List<string> dbColumns = table.Columns.Cast<DataColumn>().Select(p => p.ColumnName).ToList();
+
+                foreach (DataRow itemline in table.Rows)
+                {
+                    var valueObject = (T)Activator.CreateInstance(typeof(T));
+
+                    foreach (var property in typeof(T).GetProperties())
+                    {
+                        var columnName = MapPropertyNameToColumnName(property.Name);
+                        if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
+                            continue;
+
+
+                        var value = itemline[columnName];
+                        if (property.PropertyType == typeof(bool))
+                        {
+                            if (value == DBNull.Value) value = "N";
+                            if ((string)value == "T") value = "Y";
+
+                            bool columnValue = (string)value == "Y" ? true : false;
+                            property.SetValue(valueObject, columnValue, null);
+                        }
+                        else
+                        {
+                            var columnValue = itemline[columnName];
+                            if (columnValue == DBNull.Value) columnValue = null;
+                            property.SetValue(valueObject, columnValue, null);
+                        }
+                    }
+
+                    return valueObject;
+                }
+            }
+            _dbConnection.Connection().Close();
+            throw new Exception("BaseDataManager.GetCustom: Error accessing database (SqlDataReader returned as NULL)");
         }
 
         public List<T> GetAll()
@@ -241,6 +282,26 @@ namespace Custom.Manual.ORM.Base.Data
             {
                 throw new Exception("BaseDataManager.Update: Error during the entity update");
             }
+        }
+
+        private string GetSQLGetById(TId id)
+        {
+            string where = String.Empty;
+
+            if (id.GetType() == typeof(string))
+            {
+                where = String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName("Id"), id);
+            }
+            else if (id.GetType() == typeof(int))
+            {
+                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName("Id"), id);
+            }
+            else
+            {
+                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName("Id"), id);
+            }
+
+            return String.Format("SELECT * FROM {0} {1}", TableName, where);
         }
 
         private string MapPropertyNameToColumnName(string propertyName)

@@ -7,6 +7,7 @@ namespace Custom.Manual.ORM.Base.Interfaces
         T Get(TId id);
         TId Add(T entity);
         void Update(T entity);
+        void Delete(TId id);
         void Delete(T entity);
         int GetCount();
         List<T> GetAll();

@@ -73,6 +73,11 @@ namespace Custom.Manual.ORM.Base.Data
             throw new NotImplementedException();
         }
 
+        public void Delete(TId id)
+        {
+            throw new NotImplementedException();
+        }
+
         public T Get(TId id)
         {
             _dbConnection.SetCommand(GetSQLGetById(id));

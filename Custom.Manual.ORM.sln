@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Custom.Manual.ORM.Base", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Custom.Manual.ORM.Data", "Custom.Manual.ORM.Data\Custom.Manual.ORM.Data.csproj", "{7BCEBE9B-246D-4B97-A9D9-C02C3DB38BE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Custom.Manual.ORM.Data.Repositories", "Custom.Manual.ORM.Data.Repositories\Custom.Manual.ORM.Data.Repositories.csproj", "{6DE0C316-5ABB-42F0-B97A-1A4C525A43E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Custom.Manual.ORM.Data.Repositories", "Custom.Manual.ORM.Data.Repositories\Custom.Manual.ORM.Data.Repositories.csproj", "{6DE0C316-5ABB-42F0-B97A-1A4C525A43E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Custom.Manual.ORM.Domain", "Custom.Manual.ORM.Domain\Custom.Manual.ORM.Domain.csproj", "{4FEF3A2F-E635-492A-A7CC-B80E254B414C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{6DE0C316-5ABB-42F0-B97A-1A4C525A43E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DE0C316-5ABB-42F0-B97A-1A4C525A43E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DE0C316-5ABB-42F0-B97A-1A4C525A43E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FEF3A2F-E635-492A-A7CC-B80E254B414C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FEF3A2F-E635-492A-A7CC-B80E254B414C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FEF3A2F-E635-492A-A7CC-B80E254B414C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FEF3A2F-E635-492A-A7CC-B80E254B414C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

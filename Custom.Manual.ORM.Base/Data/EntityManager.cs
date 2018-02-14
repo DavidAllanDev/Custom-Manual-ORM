@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using Custom.Manual.ORM.Base.Interfaces;
 using Custom.Manual.ORM.Data.Connection;
 using Custom.Manual.ORM.Base.Data.Fields;
+using Custom.Manual.ORM.Base.Data.SQL;
 
 namespace Custom.Manual.ORM.Base.Data
 {
-    public abstract class EntityManager<T, TId> : IEntityManager<T, TId> where T : IIdentifiable<TId>
+    public abstract class EntityManager<T, TId> : SQLBase<T, TId>, IEntityManager<T, TId> where T : IIdentifiable<TId> 
     {
         private readonly IDBConnection _dbConnection;
-        protected Dictionary<string, string> ExplicitMappings;
-        public string TableName;
 
         public EntityManager(IDBConnection dbConnection)
         {
@@ -182,11 +181,6 @@ namespace Custom.Manual.ORM.Base.Data
             return resultsList;
         }
 
-        private string GetSQLGetAll()
-        {
-            return String.Format("SELECT * FROM {0} ", TableName);
-        }
-
         public int GetCount()
         {
             int result = new int();
@@ -200,10 +194,6 @@ namespace Custom.Manual.ORM.Base.Data
             return result;
         }
 
-        private string GetSQLGetCount()
-        {
-            return String.Format("SELECT COUNT(*) FROM {0} ", TableName);
-        }
 
         public List<T> GetCustom(string sql)
         {
@@ -297,59 +287,6 @@ namespace Custom.Manual.ORM.Base.Data
             {
                 throw new Exception("BaseDataManager.Update: Error during the entity update");
             }
-        }
-
-        private string GetSQLUpdateEntity(T entity, string colSetPlaceHolder)
-        {
-            return String.Format("UPDATE {0} SET {1} WHERE {2} = {3}", TableName, colSetPlaceHolder, MapPropertyNameToColumnName(KeyFields.Id), entity.Id);
-
-        }
-
-        private string GetSQLGetById(TId id)
-        {
-            string where = GetSQLWhereId(id);
-
-            return String.Format("SELECT * FROM {0} {1}", TableName, where);
-        }
-
-        private string GetSQLDeleteById(TId id)
-        {
-            string where = GetSQLWhereId(id);
-
-            return String.Format("DELETE FROM {0} {1}", TableName, where);
-        }
-
-        private string GetSQLWhereId(TId id)
-        {
-            string where = String.Empty;
-
-            if (id.GetType() == typeof(string))
-            {
-                where = String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
-            }
-            else if (id.GetType() == typeof(int))
-            {
-                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
-            }
-            else
-            {
-                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
-            }
-
-            return where;
-        }
-
-        private string GetSQLAddEntity(string colNamePlaceHolder, string colValuePlaceHolder)
-        {
-            return string.Format("INSERT INTO {0} ({1}) VALUES ({2}) SELECT SCOPE_IDENTITY()", TableName, colNamePlaceHolder, colValuePlaceHolder);
-        }
-
-        private string MapPropertyNameToColumnName(string propertyName)
-        {
-            if (ExplicitMappings == null)
-                return propertyName;
-
-            return ExplicitMappings.ContainsKey(propertyName) ? ExplicitMappings[propertyName] : propertyName;
         }
 
         private IList<PropertyInfo> GetPersistenceProperties(object o)

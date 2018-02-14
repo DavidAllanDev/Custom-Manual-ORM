@@ -7,6 +7,7 @@ namespace Custom.Manual.ORM.Base.Data.SQL
 {
     public abstract class SQLBase<T, TId> where T : IIdentifiable<TId>
     {
+        private readonly string _sqlSelectFrom = "SELECT * FROM";
         protected string TableName;
         protected Dictionary<string, string> ExplicitMappings;
 
@@ -30,36 +31,36 @@ namespace Custom.Manual.ORM.Base.Data.SQL
 
         protected string GetSQLGetById(TId id)
         {
-            string where = GetSQLWhereId(id);
-
-            return String.Format("SELECT * FROM {0} {1}", TableName, where);
+            return String.Format("{0} {1} {2}", _sqlSelectFrom, TableName, GetSQLWhereId(id));
         }
 
         protected string GetSQLDeleteById(TId id)
         {
-            string where = GetSQLWhereId(id);
-
-            return String.Format("DELETE FROM {0} {1}", TableName, where);
+            return String.Format("DELETE FROM {0} {1}", TableName, GetSQLWhereId(id));
         }
 
         protected string GetSQLWhereId(TId id)
         {
-            string where = String.Empty;
-
             if (id.GetType() == typeof(string))
             {
-                where = String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
+            }
+            else if (id.GetType() == typeof(char[]))
+            {
+                return String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
+            }
+            else if (id.GetType() == typeof(char))
+            {
+                return String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
             }
             else if (id.GetType() == typeof(int))
             {
-                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
             }
             else
             {
-                where = String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
             }
-
-            return where;
         }
 
         protected string GetSQLAddEntity(string colNamePlaceHolder, string colValuePlaceHolder)
@@ -69,7 +70,7 @@ namespace Custom.Manual.ORM.Base.Data.SQL
 
         protected string GetSQLGetAll()
         {
-            return String.Format("SELECT * FROM {0} ", TableName);
+            return String.Format("{0} {1}", _sqlSelectFrom, TableName);
         }
     }
 }

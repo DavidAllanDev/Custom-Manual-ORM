@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Custom.Manual.ORM.Base\Custom.Manual.ORM.Base.csproj" />
+  </ItemGroup>
+
 </Project>

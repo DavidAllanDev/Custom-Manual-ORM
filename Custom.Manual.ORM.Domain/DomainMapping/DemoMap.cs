@@ -7,13 +7,10 @@ namespace Custom.Manual.ORM.Domain.DomainMapping
 {
     public class DemoMap : IEntityMap
     {
-        public Dictionary<string, string> EntityMapper()
-        {
-            return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public Dictionary<string, string> EntityMapper() => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
-                {KeyFields.Id, "DemoMapSQLTableName_intId"}
+                {KeyFields.Id, "DemoMapSQLTableName_intId"},
             };
-        }
 
         public string EntityTableName() => "DemoMapSQLTableName";
     }

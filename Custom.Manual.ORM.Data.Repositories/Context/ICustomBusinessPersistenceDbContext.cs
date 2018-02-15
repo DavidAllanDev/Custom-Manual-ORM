@@ -4,6 +4,6 @@ namespace Custom.Manual.ORM.Data.Repositories.Context
 {
     public interface ICustomBusinessPersistenceDbContext
     {
-        DemoClassManager DemoClasses { get; set; }
+        DemoClassManager DemoClasses { get; }
     }
 }

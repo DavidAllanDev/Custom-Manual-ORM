@@ -11,6 +11,6 @@ namespace Custom.Manual.ORM.Data.Repositories
             DemoClasses = new DemoClassManager(dbConnection);
         }
 
-        public DemoClassManager DemoClasses { get; set; }
+        public DemoClassManager DemoClasses { get; private set; }
     }
 }

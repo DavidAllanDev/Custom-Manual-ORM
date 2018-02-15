@@ -6,6 +6,13 @@
         public string Password { get; set; }
         public string Server { get; set; }
         public string User { get; set; }
-        public bool HasEncryption { get; set; }
+        public bool HasEncryption
+        {
+            get => false;
+            set
+            {
+                HasEncryption = value;
+            }
+        }
     }
 }

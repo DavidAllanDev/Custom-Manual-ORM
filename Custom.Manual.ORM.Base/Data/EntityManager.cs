@@ -91,7 +91,7 @@ namespace Custom.Manual.ORM.Base.Data
                 table.Load(reader);
                 List<string> dbColumns = table.Columns.Cast<DataColumn>().Select(p => p.ColumnName).ToList();
 
-                foreach (DataRow itemline in table.Rows)
+                foreach (DataRow row in table.Rows)
                 {
                     var valueObject = (T)Activator.CreateInstance(typeof(T));
 
@@ -101,19 +101,16 @@ namespace Custom.Manual.ORM.Base.Data
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
-
-                        var value = itemline[columnName];
+                        var value = row[columnName];
                         if (property.PropertyType == typeof(bool))
                         {
                             if (value == DBNull.Value) value = "N";
-                            if ((string)value == "T") value = "Y";
 
-                            bool columnValue = (string)value == "Y" ? true : false;
-                            property.SetValue(valueObject, columnValue, null);
+                            SetBoolPropertyValue(valueObject, property, value);
                         }
                         else
                         {
-                            var columnValue = itemline[columnName];
+                            var columnValue = row[columnName];
                             if (columnValue == DBNull.Value) columnValue = null;
                             property.SetValue(valueObject, columnValue, null);
                         }
@@ -139,7 +136,7 @@ namespace Custom.Manual.ORM.Base.Data
                 table.Load(reader);
                 List<string> dbColumns = table.Columns.Cast<DataColumn>().Select(p => p.ColumnName).ToList();
 
-                foreach (DataRow itemline in table.Rows)
+                foreach (DataRow row in table.Rows)
                 {
                     var valueObject = (T)Activator.CreateInstance(typeof(T));
 
@@ -149,19 +146,16 @@ namespace Custom.Manual.ORM.Base.Data
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
-
-                        var value = itemline[columnName];
+                        var value = row[columnName];
                         if (property.PropertyType == typeof(bool))
                         {
                             if (value == DBNull.Value) value = "N";
-                            if ((string)value == "T") value = "Y";
 
-                            bool columnValue = (string)value == "Y" ? true : false;
-                            property.SetValue(valueObject, columnValue, null);
+                            SetBoolPropertyValue(valueObject, property, value);
                         }
                         else
                         {
-                            var columnValue = itemline[columnName];
+                            var columnValue = row[columnName];
                             if (columnValue == DBNull.Value) columnValue = null;
                             property.SetValue(valueObject, columnValue, null);
                         }
@@ -194,7 +188,6 @@ namespace Custom.Manual.ORM.Base.Data
             return result;
         }
 
-
         public List<T> GetCustom(string sql)
         {
             List<T> resultsList = new List<T>();
@@ -208,7 +201,7 @@ namespace Custom.Manual.ORM.Base.Data
                 table.Load(reader);
                 List<string> dbColumns = table.Columns.Cast<DataColumn>().Select(p => p.ColumnName).ToList();
 
-                foreach (DataRow itemline in table.Rows)
+                foreach (DataRow row in table.Rows)
                 {
                     var valueObject = (T)Activator.CreateInstance(typeof(T));
 
@@ -218,19 +211,16 @@ namespace Custom.Manual.ORM.Base.Data
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
-
-                        var value = itemline[columnName];
+                        var value = row[columnName];
                         if (property.PropertyType == typeof(bool))
                         {
                             if (value == DBNull.Value) value = "N";
-                            if ((string)value == "T") value = "Y";
 
-                            bool columnValue = (string)value == "Y" ? true : false;
-                            property.SetValue(valueObject, columnValue, null);
+                            SetBoolPropertyValue(valueObject, property, value);
                         }
                         else
                         {
-                            var columnValue = itemline[columnName];
+                            var columnValue = row[columnName];
                             if (columnValue == DBNull.Value) columnValue = null;
                             property.SetValue(valueObject, columnValue, null);
                         }
@@ -248,6 +238,33 @@ namespace Custom.Manual.ORM.Base.Data
             _dbConnection.Connection().Close();
 
             return resultsList;
+        }
+
+        private void SetBoolPropertyValue(T valueObject, PropertyInfo property, object value)
+        {
+            if (value.GetType() == typeof(string))
+            {
+                if ((string)value == "T") value = "Y";
+
+                bool columnValue = (string)value == "Y" ? true : false;
+                property.SetValue(valueObject, columnValue, null);
+            }
+            else if (value.GetType() == typeof(byte))
+            {
+                bool columnValue = (byte)value == 1 ? true : false;
+                property.SetValue(valueObject, columnValue, null);
+            }
+            else if (value.GetType() == typeof(int) || value.GetType() == typeof(uint))
+            {
+                bool columnValue = (int)value == 1 ? true : false;
+                property.SetValue(valueObject, columnValue, null);
+            }
+            else
+            {
+                var columnValue = value; //in this case it is alredy bool
+                if (columnValue == DBNull.Value) columnValue = null;
+                property.SetValue(valueObject, columnValue, null);
+            }
         }
 
         public void Update(T entity)

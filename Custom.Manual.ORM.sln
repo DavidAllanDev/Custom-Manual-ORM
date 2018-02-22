@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Custom.Manual.ORM.Base", "Custom.Manual.ORM.Base\Custom.Manual.ORM.Base.csproj", "{252FF70F-0B4F-400D-9056-7A40E1AEB526}"
 EndProject
@@ -13,9 +13,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Custom.Manual.ORM.Domain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6109B758-C698-457E-9DC5-FC95B61A0EB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Custom.Manual.ORM.Test", "Custom.Manual.ORM.Test\Custom.Manual.ORM.Test.csproj", "{C682BD85-1A84-4DE2-852E-28B0FB316E17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Custom.Manual.ORM.Test", "Custom.Manual.ORM.Test\Custom.Manual.ORM.Test.csproj", "{C682BD85-1A84-4DE2-852E-28B0FB316E17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Custom.Manual.ORM.IntegrationTest", "Custom.Manual.ORM.IntegrationTest\Custom.Manual.ORM.IntegrationTest.csproj", "{A4D0B5B2-E1C4-46C0-87F4-E3AB89EFE965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Custom.Manual.ORM.IntegrationTest", "Custom.Manual.ORM.IntegrationTest\Custom.Manual.ORM.IntegrationTest.csproj", "{A4D0B5B2-E1C4-46C0-87F4-E3AB89EFE965}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cache", "Cache", "{2D6EC8F1-8F20-4AB6-A433-3B4F51DCA288}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Custom.Manual.ORM.Cache", "Custom.Manual.ORM.Cache\Custom.Manual.ORM.Cache.csproj", "{9CAD94AE-4414-4A7A-9349-79E2979074A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{36A2E428-7E76-4406-9922-4D179F06D56F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{7F785D0F-DD1E-4216-86E6-E612DA78C3AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +55,10 @@ Global
 		{A4D0B5B2-E1C4-46C0-87F4-E3AB89EFE965}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4D0B5B2-E1C4-46C0-87F4-E3AB89EFE965}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4D0B5B2-E1C4-46C0-87F4-E3AB89EFE965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CAD94AE-4414-4A7A-9349-79E2979074A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CAD94AE-4414-4A7A-9349-79E2979074A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CAD94AE-4414-4A7A-9349-79E2979074A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAD94AE-4414-4A7A-9349-79E2979074A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +66,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C682BD85-1A84-4DE2-852E-28B0FB316E17} = {6109B758-C698-457E-9DC5-FC95B61A0EB4}
 		{A4D0B5B2-E1C4-46C0-87F4-E3AB89EFE965} = {6109B758-C698-457E-9DC5-FC95B61A0EB4}
+		{9CAD94AE-4414-4A7A-9349-79E2979074A1} = {2D6EC8F1-8F20-4AB6-A433-3B4F51DCA288}
+		{36A2E428-7E76-4406-9922-4D179F06D56F} = {2D6EC8F1-8F20-4AB6-A433-3B4F51DCA288}
+		{7F785D0F-DD1E-4216-86E6-E612DA78C3AB} = {2D6EC8F1-8F20-4AB6-A433-3B4F51DCA288}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73EF0461-8A35-42F9-90FB-95F8854134DD}

@@ -16,5 +16,6 @@ namespace Custom.Manual.ORM.Cache.Model
         void RemoveRange(List<T> entity);
         void Clear();
         int Estimate();
+        int Relevance();
     }
 }

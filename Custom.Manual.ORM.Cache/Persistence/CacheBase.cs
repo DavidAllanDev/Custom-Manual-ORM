@@ -54,7 +54,7 @@ namespace Custom.Manual.ORM.Cache.Persistence
 
         public List<T> GetRange(int page, int size)
         {
-            throw new NotImplementedException();
+            return _entityList.GetRange(page, size);
         }
 
         public int Relevance()
@@ -74,17 +74,19 @@ namespace Custom.Manual.ORM.Cache.Persistence
 
         public void RemoveRange(List<T> entity)
         {
-            throw new NotImplementedException();
+            _entityList.RemoveRange(entity.IndexOf(entity.FirstOrDefault()), entity.Count);
         }
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            _entityList.Remove(entity);
+            _entityList.Add(entity);
         }
 
         public void UpdateRange(List<T> entity)
         {
-            throw new NotImplementedException();
+            _entityList.RemoveRange(entity.IndexOf(entity.FirstOrDefault()), entity.Count);
+            _entityList.AddRange(entity);
         }
     }
 }

@@ -41,65 +41,67 @@ namespace Custom.Manual.ORM.Base.Data.SQL
 
         protected string GetSQLWhereId(TId id)
         {
+            string columnName = MapPropertyNameToColumnName(KeyFields.Id);
+
             if (id.GetType() == typeof(string))
             {
-                return String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}='{1}'", columnName, id);
             }
             else if (id.GetType() == typeof(char[]))
             {
-                return String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}='{1}'", columnName, id);
             }
             else if (id.GetType() == typeof(char))
             {
-                return String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}='{1}'", columnName, id);
             }
             else if (id.GetType() == typeof(int))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(byte))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(sbyte))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(decimal))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(double))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(float))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(uint))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(long))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(ulong))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(short))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(ushort))
             {
-                return String.Format("WHERE {0}={1}", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}={1}", columnName, id);
             }
             else
             {
-                return String.Format("WHERE {0}='{1}'", MapPropertyNameToColumnName(KeyFields.Id), id);
+                return String.Format("WHERE {0}='{1}'", columnName, id);
             }
         }
 

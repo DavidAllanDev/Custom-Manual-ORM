@@ -37,7 +37,7 @@ namespace Custom.Manual.ORM.Base.Data
                 }
                 firstColumn = false;
 
-                string databasefieldName = MapPropertyNameToColumnName(property.Name);
+                string databasefieldName = MapPropertyNameToColumnName(property);
 
                 colNamePlaceHolder += Environment.NewLine + "[" + databasefieldName + "]";
 
@@ -95,9 +95,9 @@ namespace Custom.Manual.ORM.Base.Data
                 {
                     var valueObject = (T)Activator.CreateInstance(typeof(T));
 
-                    foreach (var property in typeof(T).GetProperties())
+                    foreach (PropertyInfo property in typeof(T).GetProperties())
                     {
-                        var columnName = MapPropertyNameToColumnName(property.Name);
+                        var columnName = MapPropertyNameToColumnName(property);
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
@@ -142,7 +142,7 @@ namespace Custom.Manual.ORM.Base.Data
 
                     foreach (var property in typeof(T).GetProperties())
                     {
-                        var columnName = MapPropertyNameToColumnName(property.Name);
+                        var columnName = MapPropertyNameToColumnName(property);
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
@@ -207,7 +207,7 @@ namespace Custom.Manual.ORM.Base.Data
 
                     foreach (var property in typeof(T).GetProperties())
                     {
-                        var columnName = MapPropertyNameToColumnName(property.Name);
+                        var columnName = MapPropertyNameToColumnName(property);
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
@@ -282,7 +282,7 @@ namespace Custom.Manual.ORM.Base.Data
 
                 firstColumn = false;
 
-                string columnName = MapPropertyNameToColumnName(property.Name);
+                string columnName = MapPropertyNameToColumnName(property);
                 object columnValue = null;
 
                 if (property.PropertyType.IsEnum)
@@ -319,6 +319,11 @@ namespace Custom.Manual.ORM.Base.Data
             }
 
             return persistenceProperties;
+        }
+
+        private string MapPropertyNameToColumnName(PropertyInfo propertyInfo)
+        {
+            return MapPropertyNameToColumnName(propertyInfo.Name);
         }
     }
 }

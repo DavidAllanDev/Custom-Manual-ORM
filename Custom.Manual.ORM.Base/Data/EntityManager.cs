@@ -323,7 +323,25 @@ namespace Custom.Manual.ORM.Base.Data
 
         private string MapPropertyInfoToColumnName(PropertyInfo propertyInfo)
         {
-            return MapPropertyNameToColumnName(propertyInfo.Name);
+            bool hasDataAnnotation = propertyInfo.GetCustomAttributes(typeof(ColumnName), false).Any();
+
+            if (hasDataAnnotation)
+            {
+                ColumnName attribute = (ColumnName)propertyInfo.GetCustomAttributes(typeof(ColumnName), false).First();
+
+                if (attribute != null && attribute.Name != null)
+                {
+                    return attribute.Name;
+                }
+                else
+                {
+                    return MapPropertyNameToColumnName(propertyInfo.Name);
+                }
+            }
+            else
+            {
+                return MapPropertyNameToColumnName(propertyInfo.Name);
+            }
         }
     }
 }

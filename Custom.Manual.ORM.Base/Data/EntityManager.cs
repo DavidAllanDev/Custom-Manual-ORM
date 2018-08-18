@@ -97,7 +97,7 @@ namespace Custom.Manual.ORM.Base.Data
 
                     foreach (PropertyInfo property in typeof(T).GetProperties())
                     {
-                        var columnName = MapPropertyInfoToColumnName(property);
+                        string columnName = MapPropertyInfoToColumnName(property);
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
@@ -140,9 +140,9 @@ namespace Custom.Manual.ORM.Base.Data
                 {
                     var valueObject = (T)Activator.CreateInstance(typeof(T));
 
-                    foreach (var property in typeof(T).GetProperties())
+                    foreach (PropertyInfo property in typeof(T).GetProperties())
                     {
-                        var columnName = MapPropertyInfoToColumnName(property);
+                        string columnName = MapPropertyInfoToColumnName(property);
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
@@ -205,9 +205,9 @@ namespace Custom.Manual.ORM.Base.Data
                 {
                     var valueObject = (T)Activator.CreateInstance(typeof(T));
 
-                    foreach (var property in typeof(T).GetProperties())
+                    foreach (PropertyInfo property in typeof(T).GetProperties())
                     {
-                        var columnName = MapPropertyInfoToColumnName(property);
+                        string columnName = MapPropertyInfoToColumnName(property);
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 

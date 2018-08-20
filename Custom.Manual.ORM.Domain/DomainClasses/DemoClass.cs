@@ -12,7 +12,7 @@ namespace Custom.Manual.ORM.Domain.DomainClasses
         /// On this example we have a data Column Name that differ from the property of the class
         /// On the next versions of this ORM it will be getting it from this data annotation
         /// </summary>
-        [ColumnName(Name = "Enable")]
+        [Field(Name = "Enable")]
         public bool Active { get; set; }
     }
 }

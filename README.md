@@ -22,3 +22,12 @@
 ### Custom.Manual.ORM.Data.Repositories
 #### The project that agredate all the others, where you'll be creating the context of use and will be used by your project
 #### So it refer to Custom.Manual.ORM.Base, Custom.Manual.ORM.Data and Custom.Manual.ORM.Domain.
+
+### OS Tested
+#### Windows Platforms X86 and X64
+#### MacOS 10.13.** and higer versions
+
+### Visual Studio
+#### Windows Visual Studio 2017
+#### Visual Studio for MacOS 7.8.3
+#### Visual Studio for MacOS 8.0 Preview

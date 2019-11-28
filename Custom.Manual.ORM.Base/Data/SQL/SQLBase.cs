@@ -21,22 +21,22 @@ namespace Custom.Manual.ORM.Base.Data.SQL
 
         protected string GetSQLGetCount()
         {
-            return String.Format("SELECT COUNT(*) FROM {0} ", TableName);
+            return string.Format("SELECT COUNT(*) FROM {0} ", TableName);
         }
         
         protected string GetSQLUpdateEntity(T entity, string colSetPlaceHolder)
         {
-            return String.Format("UPDATE {0} SET {1} WHERE {2} = {3}", TableName, colSetPlaceHolder, MapPropertyNameToColumnName(KeyFields.Id), entity.Id);
+            return string.Format("UPDATE {0} SET {1} WHERE {2} = {3}", TableName, colSetPlaceHolder, MapPropertyNameToColumnName(KeyFields.Id), entity.Id);
         }
 
         protected string GetSQLGetById(TId id)
         {
-            return String.Format("{0} {1} {2}", _sqlSelectFrom, TableName, GetSQLWhereId(id));
+            return string.Format("{0} {1} {2}", _sqlSelectFrom, TableName, GetSQLWhereId(id));
         }
 
         protected string GetSQLDeleteById(TId id)
         {
-            return String.Format("DELETE FROM {0} {1}", TableName, GetSQLWhereId(id));
+            return string.Format("DELETE FROM {0} {1}", TableName, GetSQLWhereId(id));
         }
 
         protected string GetSQLWhereId(TId id)
@@ -69,39 +69,39 @@ namespace Custom.Manual.ORM.Base.Data.SQL
             }
             else if (id.GetType() == typeof(decimal))
             {
-                return String.Format("WHERE {0}={1}", columnName, id);
+                return string.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(double))
             {
-                return String.Format("WHERE {0}={1}", columnName, id);
+                return string.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(float))
             {
-                return String.Format("WHERE {0}={1}", columnName, id);
+                return string.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(uint))
             {
-                return String.Format("WHERE {0}={1}", columnName, id);
+                return string.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(long))
             {
-                return String.Format("WHERE {0}={1}", columnName, id);
+                return string.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(ulong))
             {
-                return String.Format("WHERE {0}={1}", columnName, id);
+                return string.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(short))
             {
-                return String.Format("WHERE {0}={1}", columnName, id);
+                return string.Format("WHERE {0}={1}", columnName, id);
             }
             else if (id.GetType() == typeof(ushort))
             {
-                return String.Format("WHERE {0}={1}", columnName, id);
+                return string.Format("WHERE {0}={1}", columnName, id);
             }
             else
             {
-                return String.Format("WHERE {0}='{1}'", columnName, id);
+                return string.Format("WHERE {0}='{1}'", columnName, id);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Custom.Manual.ORM.Base.Data.SQL
 
         protected string GetSQLGetAll()
         {
-            return String.Format("{0} {1}", _sqlSelectFrom, TableName);
+            return string.Format("{0} {1}", _sqlSelectFrom, TableName);
         }
     }
 }

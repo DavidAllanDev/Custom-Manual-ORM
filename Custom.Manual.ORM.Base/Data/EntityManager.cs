@@ -7,6 +7,7 @@ using Custom.Manual.ORM.Base.Interfaces;
 using Custom.Manual.ORM.Data.Connection;
 using Custom.Manual.ORM.Base.Data.Fields;
 using Custom.Manual.ORM.Base.Data.SQL;
+using System.Data.SqlClient;
 
 namespace Custom.Manual.ORM.Base.Data
 {
@@ -54,7 +55,7 @@ namespace Custom.Manual.ORM.Base.Data
             try
             {
                 string sql = GetSQLAddEntity(colNamePlaceHolder, colValuePlaceHolder);
-                var id = (TId)Convert.ChangeType(_dbConnection.SetInsertCommand(sql), typeof(TId));
+                TId id = (TId)Convert.ChangeType(_dbConnection.SetInsertCommand(sql), typeof(TId));
 
                 entity.Id = id;
 
@@ -73,7 +74,7 @@ namespace Custom.Manual.ORM.Base.Data
 
         public void Delete(TId id)
         {
-            var deleteSuccessful = _dbConnection.SetUpdateCommand(GetSQLDeleteById(id));
+            bool deleteSuccessful = _dbConnection.SetUpdateCommand(GetSQLDeleteById(id));
             if (!deleteSuccessful)
             {
                 throw new Exception("BaseDataManager.Update: Error during a entity delete");
@@ -83,7 +84,7 @@ namespace Custom.Manual.ORM.Base.Data
         public T Get(TId id)
         {
             _dbConnection.SetCommand(GetSQLGetById(id));
-            var reader = _dbConnection.Result();
+            SqlDataReader reader = _dbConnection.Result();
 
             if (reader != null)
             {
@@ -93,7 +94,7 @@ namespace Custom.Manual.ORM.Base.Data
 
                 foreach (DataRow row in table.Rows)
                 {
-                    var valueObject = (T)Activator.CreateInstance(typeof(T));
+                    T valueObject = (T)Activator.CreateInstance(typeof(T));
 
                     foreach (PropertyInfo property in typeof(T).GetProperties())
                     {
@@ -101,7 +102,7 @@ namespace Custom.Manual.ORM.Base.Data
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
-                        var value = row[columnName];
+                        object value = row[columnName];
                         if (property.PropertyType == typeof(bool))
                         {
                             if (value == DBNull.Value) value = "N";
@@ -110,7 +111,7 @@ namespace Custom.Manual.ORM.Base.Data
                         }
                         else
                         {
-                            var columnValue = row[columnName];
+                            object columnValue = row[columnName];
                             if (columnValue == DBNull.Value) columnValue = null;
                             property.SetValue(valueObject, columnValue, null);
                         }
@@ -128,7 +129,7 @@ namespace Custom.Manual.ORM.Base.Data
             List<T> resultsList = new List<T>();
 
             _dbConnection.SetCommand(GetSQLGetAll());
-            var reader = _dbConnection.Result();
+            SqlDataReader reader = _dbConnection.Result();
 
             if (reader != null)
             {
@@ -138,7 +139,7 @@ namespace Custom.Manual.ORM.Base.Data
 
                 foreach (DataRow row in table.Rows)
                 {
-                    var valueObject = (T)Activator.CreateInstance(typeof(T));
+                    T valueObject = (T)Activator.CreateInstance(typeof(T));
 
                     foreach (PropertyInfo property in typeof(T).GetProperties())
                     {
@@ -146,7 +147,7 @@ namespace Custom.Manual.ORM.Base.Data
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
-                        var value = row[columnName];
+                        object value = row[columnName];
                         if (property.PropertyType == typeof(bool))
                         {
                             if (value == DBNull.Value) value = "N";
@@ -155,7 +156,7 @@ namespace Custom.Manual.ORM.Base.Data
                         }
                         else
                         {
-                            var columnValue = row[columnName];
+                            object columnValue = row[columnName];
                             if (columnValue == DBNull.Value) columnValue = null;
                             property.SetValue(valueObject, columnValue, null);
                         }
@@ -193,7 +194,7 @@ namespace Custom.Manual.ORM.Base.Data
             List<T> resultsList = new List<T>();
 
             _dbConnection.SetCommand(sql);
-            var reader = _dbConnection.Result();
+            SqlDataReader reader = _dbConnection.Result();
 
             if (reader != null)
             {
@@ -211,7 +212,7 @@ namespace Custom.Manual.ORM.Base.Data
                         if (!dbColumns.Any(col => col.Equals(columnName, StringComparison.InvariantCultureIgnoreCase)))
                             continue;
 
-                        var value = row[columnName];
+                        object value = row[columnName];
                         if (property.PropertyType == typeof(bool))
                         {
                             if (value == DBNull.Value) value = "N";
@@ -220,7 +221,7 @@ namespace Custom.Manual.ORM.Base.Data
                         }
                         else
                         {
-                            var columnValue = row[columnName];
+                            object columnValue = row[columnName];
                             if (columnValue == DBNull.Value) columnValue = null;
                             property.SetValue(valueObject, columnValue, null);
                         }
@@ -261,7 +262,7 @@ namespace Custom.Manual.ORM.Base.Data
             }
             else
             {
-                var columnValue = value; //in this case it is alredy bool
+                object columnValue = value; //in this case it is alredy bool
                 if (columnValue == DBNull.Value) columnValue = null;
                 property.SetValue(valueObject, columnValue, null);
             }
@@ -299,7 +300,7 @@ namespace Custom.Manual.ORM.Base.Data
 
             string sql = GetSQLUpdateEntity(entity, colSetPlaceHolder);
 
-            var updateSuccessful = _dbConnection.SetUpdateCommand(sql);
+            bool updateSuccessful = _dbConnection.SetUpdateCommand(sql);
             if (!updateSuccessful)
             {
                 throw new Exception("BaseDataManager.Update: Error during the entity update");
@@ -309,7 +310,7 @@ namespace Custom.Manual.ORM.Base.Data
         private IList<PropertyInfo> GetPersistenceProperties(object o)
         {
             PropertyInfo[] objectProperties = o.GetType().GetProperties();
-            var persistenceProperties = new List<PropertyInfo>();
+            List<PropertyInfo> persistenceProperties = new List<PropertyInfo>();
             foreach (PropertyInfo property in objectProperties)
             {
                 bool ignore = property.GetCustomAttributes(typeof(IgnoreAttribute), false).Any();

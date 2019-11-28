@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Custom.Manual.ORM.Base.Data.Fields;
 using Custom.Manual.ORM.Base.Interfaces;
 
@@ -43,59 +42,59 @@ namespace Custom.Manual.ORM.Base.Data.SQL
         {
             string columnName = MapPropertyNameToColumnName(KeyFields.Id);
 
-            if (id.GetType() == typeof(string))
+            if (id is string)
             {
-                return String.Format("WHERE {0}='{1}'", columnName, id);
+                return string.Format("WHERE {0}='{1}'", columnName, id);
             }
             else if (id.GetType() == typeof(char[]))
             {
-                return String.Format("WHERE {0}='{1}'", columnName, id);
+                return string.Format("WHERE {0}='{1}'", columnName, id);
             }
-            else if (id.GetType() == typeof(char))
+            else if (id is char)
             {
-                return String.Format("WHERE {0}='{1}'", columnName, id);
+                return string.Format("WHERE {0}='{1}'", columnName, id);
             }
-            else if (id.GetType() == typeof(int))
-            {
-                return String.Format("WHERE {0}={1}", columnName, id);
-            }
-            else if (id.GetType() == typeof(byte))
-            {
-                return String.Format("WHERE {0}={1}", columnName, id);
-            }
-            else if (id.GetType() == typeof(sbyte))
-            {
-                return String.Format("WHERE {0}={1}", columnName, id);
-            }
-            else if (id.GetType() == typeof(decimal))
+            else if (id is int)
             {
                 return string.Format("WHERE {0}={1}", columnName, id);
             }
-            else if (id.GetType() == typeof(double))
+            else if (id is byte)
             {
                 return string.Format("WHERE {0}={1}", columnName, id);
             }
-            else if (id.GetType() == typeof(float))
+            else if (id is sbyte)
             {
                 return string.Format("WHERE {0}={1}", columnName, id);
             }
-            else if (id.GetType() == typeof(uint))
+            else if (id is decimal)
             {
                 return string.Format("WHERE {0}={1}", columnName, id);
             }
-            else if (id.GetType() == typeof(long))
+            else if (id is double)
             {
                 return string.Format("WHERE {0}={1}", columnName, id);
             }
-            else if (id.GetType() == typeof(ulong))
+            else if (id is float)
             {
                 return string.Format("WHERE {0}={1}", columnName, id);
             }
-            else if (id.GetType() == typeof(short))
+            else if (id is uint)
             {
                 return string.Format("WHERE {0}={1}", columnName, id);
             }
-            else if (id.GetType() == typeof(ushort))
+            else if (id is long)
+            {
+                return string.Format("WHERE {0}={1}", columnName, id);
+            }
+            else if (id is ulong)
+            {
+                return string.Format("WHERE {0}={1}", columnName, id);
+            }
+            else if (id is short)
+            {
+                return string.Format("WHERE {0}={1}", columnName, id);
+            }
+            else if (id is ushort)
             {
                 return string.Format("WHERE {0}={1}", columnName, id);
             }

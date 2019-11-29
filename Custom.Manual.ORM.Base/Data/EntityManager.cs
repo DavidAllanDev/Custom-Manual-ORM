@@ -243,19 +243,19 @@ namespace Custom.Manual.ORM.Base.Data
 
         private void SetBoolPropertyValue(T valueObject, PropertyInfo property, object value)
         {
-            if (value.GetType() == typeof(string))
+            if (value is string)
             {
                 if ((string)value == "T") value = "Y";
 
                 bool columnValue = (string)value == "Y" ? true : false;
                 property.SetValue(valueObject, columnValue, null);
             }
-            else if (value.GetType() == typeof(byte))
+            else if (value is byte)
             {
                 bool columnValue = (byte)value == 1 ? true : false;
                 property.SetValue(valueObject, columnValue, null);
             }
-            else if (value.GetType() == typeof(int) || value.GetType() == typeof(uint))
+            else if (value is int || value is uint)
             {
                 bool columnValue = (int)value == 1 ? true : false;
                 property.SetValue(valueObject, columnValue, null);

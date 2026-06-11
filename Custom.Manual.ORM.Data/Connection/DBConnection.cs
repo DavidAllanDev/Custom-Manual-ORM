@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Custom.Manual.ORM.Data.Setting;
 
 namespace Custom.Manual.ORM.Data.Connection

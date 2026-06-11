@@ -7,7 +7,7 @@ using Custom.Manual.ORM.Base.Interfaces;
 using Custom.Manual.ORM.Data.Connection;
 using Custom.Manual.ORM.Base.Data.Fields;
 using Custom.Manual.ORM.Base.Data.SQL;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Custom.Manual.ORM.Base.Data
 {

@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Custom.Manual.ORM.Domain\Custom.Manual.ORM.Domain.csproj" />
+    <ProjectReference Include="..\Custom.Manual.ORM.Data.Repositories\Custom.Manual.ORM.Data.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

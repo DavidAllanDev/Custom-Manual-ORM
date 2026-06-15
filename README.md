@@ -1,33 +1,56 @@
 # Custom-Manual-ORM
-## A Simple example of a Custom Manual ORM
-### Using .net standard 2.0, it's a repository manager that map entities /code manually/ and allow it to have a simple ORM.
-#### The initial idea is using  a /database first/ manually implementing a dictionary with <property,database column> or using a data annotation attibute([Field(Name = "customName")]) or simply reading the class property to map from/to db. and then we are figuring out a way to develop such as a /code first/ and so on.
+A simple example of a custom manual ORM.
 
-### Tip: On the Example Custom.Manual.ORM.Domain:"DemoClass" instead of using class on name,just use the context such as "Car" or "Customer"
+Status
+------
+This repository was migrated from netstandard2.1/netcore3.1 to .NET 10 (net10.0).
 
-#### Next steps: The idea is to elaborate the cache project and let the Custom-Manual-ORM grow to be able to let user decide when to cache or not, when to commit its data or not.
-#### Next steps: Also to let possible to implement "Unit of work pattern"
+Migration summary
+-----------------
+- All projects now target net10.0.
+- Test packages updated: Microsoft.NET.Test.Sdk (17.10.0), MSTest.* (3.0.2).
+- Microsoft.Data.SqlClient updated to 7.0.1.
+- global.json added to pin the SDK to 10.0.301 (rollForward: disable).
 
+Requirements
+------------
+- .NET SDK 10.0.301 installed in development/CI environments.
 
-### Custom.Manual.ORM.Base
-#### Abstractions for Entity Manager ans SQL scripts base abstracted classes to consume data information from some DB (SQL Server based in the moment).
+Build and test
+--------------
+- dotnet build
+- dotnet test
 
-### Custom.Manual.ORM.Data
-#### Database Connection and Settings elements consumed by the Custom.Manual.ORM.Base project.
+Notes
+-----
+- .NET 10 is LTS. If you need compatibility with consumers that require netstandard, consider multi-targeting.
+- A branch "targeting net8.0" was created during the process; master now targets net10.0.
 
-### Custom.Manual.ORM.Domain
-#### It represent the project you'1l have to work on modeling, so you can create your own Domain project to do it.
-#### Meant to model the Domain Entities and it point to Custom.Manual.ORM.Base to implement its Interfaces and to model with its Data Fields.
+Project structure
+-----------------
+Custom.Manual.ORM.Base
+  - Abstractions for entity managers and SQL base classes used to access a database (SQL Server supported).
 
-### Custom.Manual.ORM.Data.Repositories
-#### The project that agredate all the others, where you'll be creating the context of use and will be used by your project
-#### So it refer to Custom.Manual.ORM.Base, Custom.Manual.ORM.Data and Custom.Manual.ORM.Domain.
+Custom.Manual.ORM.Data
+  - Database connection and settings used by the Base project.
 
-### OS Tested
-#### Windows Platforms X86 and X64
-#### MacOS 10.13.** and higer versions
+Custom.Manual.ORM.Domain
+  - Domain project where you model entities used by the ORM.
 
-### Visual Studio
-#### Windows Visual Studio 2017
-#### Visual Studio for MacOS 7.8.3
-#### Visual Studio for MacOS 8.0 Preview
+Custom.Manual.ORM.Data.Repositories
+  - Aggregates the other projects and provides repository implementations.
+
+Custom.Manual.ORM.Cache
+  - Cache project (work in progress).
+
+Compatibility
+-------------
+- OS: Windows and macOS
+- Visual Studio: recent versions that support .NET 10 (update Visual Studio/VS for Mac if needed)
+
+Next steps
+----------
+- Consider adding multi-targeting if you need to support netstandard consumers.
+- Update CI pipelines to use the pinned .NET SDK or install the required SDK on runners.
+
+If you want, I can commit this README update and push the changes to the remote.
